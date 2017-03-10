@@ -4,7 +4,7 @@ import {
   AfterContentInit,
   OnDestroy,
   Input,
-  Renderer,
+  RendererV2,
   ViewEncapsulation,
   ElementRef,
   Output,
@@ -127,11 +127,11 @@ export class MdlScreenSizeService {
 })
 export class MdlLayoutComponent implements AfterContentInit, OnDestroy, OnChanges {
 
-  @ContentChild(MdlLayoutHeaderComponent) private header;
+  @ContentChild(MdlLayoutHeaderComponent) public header;
   // will be set to undefined, if not a direct child or not present in 2.0.0 i
   // n 2.0.1 it is now the grand child drawer again :(
-  @ContentChild(MdlLayoutDrawerComponent) private drawer;
-  @ContentChild(MdlLayoutContentComponent) private content;
+  @ContentChild(MdlLayoutDrawerComponent) public drawer;
+  @ContentChild(MdlLayoutContentComponent) public content;
 
   @Input('mdl-layout-mode') public mode: string = STANDARD;
 
@@ -155,11 +155,6 @@ export class MdlLayoutComponent implements AfterContentInit, OnDestroy, OnChange
   get selectedIndex() { return this._selectedIndex; }
   set selectedIndex(value) { this._selectedIndex = toNumber(value); }
 
-  private _isRipple: boolean = false;
-  @Input('mdl-ripple')
-  get isRipple() { return this._isRipple; }
-  set isRipple(value) { this._isRipple = toBoolean(value); }
-
   private _isNoDrawer: boolean = false;
   @Input('mdl-layout-no-drawer-button')
   get isNoDrawer() { return this._isNoDrawer; }
@@ -178,7 +173,7 @@ export class MdlLayoutComponent implements AfterContentInit, OnDestroy, OnChange
   private scrollListener: Function;
 
   constructor(
-    private renderer: Renderer,
+    private renderer: RendererV2,
     private evm: EventManager,
     private el: ElementRef,
     private ngZone: NgZone,
@@ -233,6 +228,7 @@ export class MdlLayoutComponent implements AfterContentInit, OnDestroy, OnChange
     if (this.content) {
       this.scrollListener = this.renderer.listen(this.content.el, 'scroll', (e) => {
          this.onScroll(this.content.el.scrollTop);
+         return true;
       });
 
       this.screenSizeService.sizes().subscribe( (isSmall: boolean) => {

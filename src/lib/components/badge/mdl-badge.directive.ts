@@ -3,9 +3,10 @@ import {
   Input,
   OnChanges,
   ElementRef,
-  Renderer,
+  RendererV2,
   NgModule,
-  ModuleWithProviders
+  ModuleWithProviders,
+  SimpleChanges
 } from '@angular/core';
 
 @Directive({
@@ -20,12 +21,12 @@ export class MdlBadgeDirective implements OnChanges {
 
   @Input('mdl-badge') public mdlBadgeContent: string;
 
-  constructor(private elementRef: ElementRef, private renderer: Renderer) {
+  constructor(private elementRef: ElementRef, private renderer: RendererV2) {
     this.el = elementRef.nativeElement;
   }
 
-  public ngOnChanges() {
-    this.renderer.setElementAttribute(this.el, 'data-badge', this.mdlBadgeContent);
+  public ngOnChanges(changes: SimpleChanges) {
+    this.renderer.setAttribute(this.el, 'data-badge', this.mdlBadgeContent);
   }
 
 }

@@ -1,12 +1,13 @@
 {
-  "name": "angular2-mdl",
-  "version": "2.12.1",
+  "name": "@angular-mdl/core",
+  "version": "3.0.0-beta.5",
   "license": "MIT",
   "description": "Angular 2 components, directives and styles based on material design lite https://getmdl.io.",
   "homepage": "http://mseemann.io/angular2-mdl/",
   "keywords": [
     "angular 2",
     "angular2",
+    "angular",
     "material",
     "material design",
     "material design lite",
@@ -33,8 +34,8 @@
     "url": "git+https://github.com/mseemann/angular2-mdl.git"
   },
   "peerDependencies": {
-    "@angular/core": "^2.0.2",
-    "@angular/common": "^2.0.2",
-    "@angular/forms": "^2.0.2"
+    "@angular/core": ">=4.0.0-beta <5.0.0",
+    "@angular/common": ">=4.0.0-beta <5.0.0",
+    "@angular/forms": ">=4.0.0-beta <5.0.0"
   }
 }

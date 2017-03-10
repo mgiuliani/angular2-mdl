@@ -3,10 +3,11 @@ import {
   Input,
   ElementRef,
   OnChanges,
-  Renderer,
+  RendererV2,
   NgModule,
   ModuleWithProviders,
-  ViewEncapsulation
+  ViewEncapsulation,
+  SimpleChanges
 } from '@angular/core';
 import { MdlError } from '../common/mdl-error';
 import { toBoolean } from '../common/boolean-property';
@@ -69,11 +70,11 @@ export class MdlButtonComponent implements OnChanges {
   get disabled(): boolean { return this._disabled; }
   set disabled(value) { this._disabled = toBoolean(value); }
 
-  constructor(public elementRef: ElementRef, private renderer: Renderer) {
+  constructor(public elementRef: ElementRef, private renderer: RendererV2) {
     this.element = elementRef.nativeElement;
   }
 
-  public ngOnChanges() {
+  public ngOnChanges(changes: SimpleChanges) {
 
     if (this.mdlButtonType && MDL_BUTTON_TYPES.indexOf(this.mdlButtonType) === -1) {
       throw new MdlUnsupportedButtonTypeError(this.mdlButtonType);
@@ -93,7 +94,9 @@ export class MdlButtonComponent implements OnChanges {
   }
 
   public blurIt() {
-    this.renderer.invokeElementMethod(this.element, 'blur', []);
+    if (this.element['blur']){
+      this.element['blur']();
+    }
   }
 }
 

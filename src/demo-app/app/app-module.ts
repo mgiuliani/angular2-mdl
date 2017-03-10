@@ -38,7 +38,6 @@ import { DialogDemo } from './dialog/dialog.component';
 import { DialogDeclarativeDemo } from './dialog-declarative/dialog-declarative.component';
 import { LoginModule } from './dialog/login.module';
 
-
 @NgModule({
   imports: [
     BrowserModule,

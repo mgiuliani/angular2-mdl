@@ -2,7 +2,7 @@ import {
   Component,
   forwardRef,
   Input,
-  Renderer,
+  RendererV2,
   ElementRef,
   OnChanges,
   DoCheck,
@@ -14,7 +14,8 @@ import {
   EventEmitter,
   Output,
   ViewEncapsulation,
-  ModuleWithProviders
+  ModuleWithProviders,
+  SimpleChanges
 } from '@angular/core';
 import {
   NG_VALUE_ACCESSOR,
@@ -149,7 +150,7 @@ export class MdlTextFieldComponent implements ControlValueAccessor, OnChanges, D
   @Output('keyup')
   public keyupEmitter: EventEmitter<KeyboardEvent> = new EventEmitter<KeyboardEvent>();
 
-  @ViewChild('input') private inputEl: ElementRef;
+  @ViewChild('input') public inputEl: ElementRef;
 
   get value(): any { return this.value_; };
   @Input() set value(v: any) {
@@ -218,7 +219,7 @@ export class MdlTextFieldComponent implements ControlValueAccessor, OnChanges, D
   set disableNativeValidityChecking(value) { this._disableNativeValidityChecking = toBoolean(value);}
 
   constructor(
-    private renderer: Renderer,
+    private renderer: RendererV2,
     private elmRef: ElementRef,
     @Optional() @Inject(DISABLE_NATIVE_VALIDITY_CHECKING) private nativeCheckGlobalDisabled: Boolean) {
     this.el = elmRef.nativeElement;
@@ -244,7 +245,7 @@ export class MdlTextFieldComponent implements ControlValueAccessor, OnChanges, D
     this.disabled = isDisabled;
   }
 
-  public ngOnChanges() {
+  public ngOnChanges(changes: SimpleChanges) {
     this.checkDisabled();
   }
 
@@ -257,16 +258,18 @@ export class MdlTextFieldComponent implements ControlValueAccessor, OnChanges, D
     if ( !this.inputEl ) {
       return;
     }
-    this.renderer.invokeElementMethod(this.inputEl.nativeElement, 'focus', []);
+    if (this.inputEl.nativeElement['focus']) {
+      this.inputEl.nativeElement.focus();
+    }
   }
 
   protected onFocus(event: FocusEvent) {
-    this.renderer.setElementClass(this.el, IS_FOCUSED, true);
+    this.renderer.addClass(this.el, IS_FOCUSED);
     this.focusEmitter.emit(event);
   }
 
   protected onBlur(event: FocusEvent) {
-    this.renderer.setElementClass(this.el, IS_FOCUSED, false);
+    this.renderer.removeClass(this.el, IS_FOCUSED);
     this.onTouchedCallback();
     this.blurEmitter.emit(event);
   }
@@ -276,7 +279,11 @@ export class MdlTextFieldComponent implements ControlValueAccessor, OnChanges, D
   }
 
   private checkDisabled() {
-    this.renderer.setElementClass(this.el, IS_DISABLED, this.disabled);
+    if (this.disabled){
+      this.renderer.addClass(this.el, IS_DISABLED);
+    } else {
+      this.renderer.removeClass(this.el, IS_DISABLED);
+    }
   }
 
   private checkValidity() {
@@ -289,13 +296,22 @@ export class MdlTextFieldComponent implements ControlValueAccessor, OnChanges, D
       return;
     }
     if (this.inputEl && this.inputEl.nativeElement.validity) {
-      this.renderer.setElementClass(this.el, IS_INVALID, !this.inputEl.nativeElement.validity.valid);
+      if (!this.inputEl.nativeElement.validity.valid){
+        this.renderer.addClass(this.el, IS_INVALID);
+      } else {
+        this.renderer.removeClass(this.el, IS_INVALID);
+      }
     }
   }
 
   private checkDirty() {
     let dirty = this.inputEl && this.inputEl.nativeElement.value && this.inputEl.nativeElement.value.length > 0;
-    this.renderer.setElementClass(this.el, IS_DIRTY, dirty);
+    if (dirty){
+      this.renderer.addClass(this.el, IS_DIRTY);
+    } else {
+      this.renderer.removeClass(this.el, IS_DIRTY);
+    }
+
   }
 
   public keydownTextarea($event: KeyboardEvent) {

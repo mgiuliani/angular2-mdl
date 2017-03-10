@@ -14,6 +14,8 @@ export * from './mdl-dialog.service';
 export * from './mdl-dialog-configuration';
 export * from './mdl-alert.component';
 
+
+
 const PUBLIC_COMPONENTS = [
   MdlDialogComponent,
   MdlAlertComponent

@@ -1,3 +1,55 @@
+<a name="3.0.0-rc.0"></a>
+# 3.0.0-rc.0 (n.n.)
+
+* Renderer replaced by RendererV2
+
+
+<a name="3.0.0-beta.5"></a>
+# 3.0.0-beta.5 (2017.03.07)
+
+### Bug Fixes
+* [639](https://github.com/mseemann/angular2-mdl/issues/639) (BrowserModule imported twice with angular 4.rc2)
+
+
+### Features
+* [631](https://github.com/mseemann/angular2-mdl/pull/631) (changed table columns to allow for HTML content by [@joevanwanzeele](https://github.com/joevanwanzeele))
+
+###Breaking Changes
+* the public methods show and hide on tooltips have be removed
+* the mld-ripple directive no longer works on mdl-list-items
+
+<a name="3.0.0-beta.4"></a>
+# 3.0.0-beta.4 (2017-03-02)
+* build with angular 4.0.0-rc.2
+
+<a name="3.0.0-beta.3"></a>
+# 3.0.0-beta.3 (2017-02-24)
+
+###Breaking Changes
+* The npm package and the name have changed. It is now: @angular-mdl/core
+* This Verison is compatible with Angualr 4.rc.1
+
+<a name="2.13.2"></a>
+# 2.13.2 (2017-02-24)
+
+### Bug Fixes
+* [595](https://github.com/mseemann/angular2-mdl/issues/595) (Incorrect typings of mdl table)
+
+
+<a name="2.13.1"></a>
+# 2.13.1 (2017-02-12)
+
+### Bug Fixes
+* [512](https://github.com/mseemann/angular2-mdl/issues/512) (Tabs cannot be rendered dynamically with an *ngFor loop)
+* [516](https://github.com/mseemann/angular2-mdl/issues/516) (Building with AoT throws errors) by [@jlee1201](https://github.com/jlee1201
+
+
+<a name="2.13.0"></a>
+# 2.13.0 (2017-01-30)
+
+### Features
+* [483](https://github.com/mseemann/angular2-mdl/pull/483) (Event emitter to detect state of modals being opened or closed by [@mgiuliani](https://github.com/mgiuliani))
+
 <a name="2.12.1"></a>
 # 2.12.1 (2017-01-19)
 

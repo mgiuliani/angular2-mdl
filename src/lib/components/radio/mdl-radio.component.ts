@@ -3,7 +3,7 @@ import {
     ElementRef,
     Output,
     EventEmitter,
-    Renderer,
+    RendererV2,
     forwardRef,
     Input,
     NgModule,
@@ -124,8 +124,8 @@ export class MdlRadioComponent implements ControlValueAccessor, OnInit, OnDestro
 
   constructor(
       private elementRef: ElementRef,
-      private renderer: Renderer,
-      private ragioGroupRegisty: MdlRadioGroupRegisty,
+      private renderer: RendererV2,
+      private radioGroupRegistry: MdlRadioGroupRegisty,
       @Optional() private formGroupName: FormGroupName) {
     this.el = elementRef.nativeElement;
   }
@@ -137,11 +137,11 @@ export class MdlRadioComponent implements ControlValueAccessor, OnInit, OnDestro
     // register the radio button - this is the only chance to unselect the
     // radio button that is no longer active - scope the radio button with it's group
     // if there is one.
-    this.ragioGroupRegisty.add(this, this.formGroupName);
+    this.radioGroupRegistry.add(this, this.formGroupName);
   }
 
   public ngOnDestroy() {
-    this.ragioGroupRegisty.remove(this);
+    this.radioGroupRegistry.remove(this);
   }
 
   public writeValue(optionValue: any): void {
@@ -159,7 +159,7 @@ export class MdlRadioComponent implements ControlValueAccessor, OnInit, OnDestro
     // wrap the callback, so that we can call select on the registry
     this.onChangeCallback = () => {
       fn(this.value);
-      this.ragioGroupRegisty.select(this, this.formGroupName);
+      this.radioGroupRegistry.select(this, this.formGroupName);
     };
   }
 
@@ -171,15 +171,15 @@ export class MdlRadioComponent implements ControlValueAccessor, OnInit, OnDestro
     this.disabled = isDisabled;
   }
 
-  protected onFocus() {
-    this.renderer.setElementClass(this.el, IS_FOCUSED, true);
+  public onFocus() {
+    this.renderer.addClass(this.el, IS_FOCUSED);
   }
 
-  protected onBlur() {
-    this.renderer.setElementClass(this.el, IS_FOCUSED, false);
+  public onBlur() {
+    this.renderer.removeClass(this.el, IS_FOCUSED);
   }
 
-  protected onClick() {
+  public onClick() {
     if (this.disabled) {
       return;
     }

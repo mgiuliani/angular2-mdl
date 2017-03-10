@@ -3,7 +3,7 @@ import {
   Input,
   OnInit,
   ViewContainerRef,
-  Renderer,
+  RendererV2,
   ComponentRef,
   ComponentFactoryResolver,
   HostListener
@@ -21,7 +21,7 @@ export class AbstractMdlTooltipDirective implements OnInit {
     private vcRef: ViewContainerRef,
     private large: boolean,
     private componentFactoryResolver: ComponentFactoryResolver,
-    private renderer: Renderer) {
+    private renderer: RendererV2) {
   }
 
 
@@ -51,12 +51,12 @@ export class AbstractMdlTooltipDirective implements OnInit {
     this.tooltipComponent.position = this.position;
   }
 
-  protected onMouseEnter(event) {
+  public onMouseEnter(event) {
     this.tooltipComponent.mouseEnter(event);
   }
 
   @HostListener('window:touchstart')
-  protected onMouseLeave() {
+  public onMouseLeave() {
     this.tooltipComponent.mouseLeave();
   }
 }
@@ -81,7 +81,7 @@ export class MdlTooltipDirective extends AbstractMdlTooltipDirective {
   constructor(
     vcRef: ViewContainerRef,
     componentFactoryResolver: ComponentFactoryResolver,
-    renderer: Renderer) {
+    renderer: RendererV2) {
     super(vcRef, false, componentFactoryResolver, renderer);
   }
 
@@ -100,7 +100,7 @@ export class MdlTooltipLargeDirective extends AbstractMdlTooltipDirective {
   constructor(
     vcRef: ViewContainerRef,
     componentFactoryResolver: ComponentFactoryResolver,
-    renderer: Renderer) {
+    renderer: RendererV2) {
     super(vcRef, true, componentFactoryResolver, renderer);
   }
 
